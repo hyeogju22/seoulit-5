@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BMTI — 나만의 특별한 성향 테스트</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+  <div class="container">
+    <!-- 1. 시작 화면 -->
+    <section id="start-page" class="page active">
+      <div class="badge">🔥 2026 트렌드 테스트</div>
+      <h1>My <b>BMTI</b> Test</h1>
+      <p>진짜 내 모습을 알아보는 초정밀 성향 분석</p>
+      <div class="hero-img">🧠✨</div>
+      <button id="btn-start" class="btn-main">테스트 시작하기</button>
+    </section>
+
+    <!-- 2. 질문 화면 -->
+    <section id="question-page" class="page">
+      <div class="progress-container">
+        <div class="progress-bar" id="progress"></div>
+      </div>
+      <div class="count" id="question-count">1 / 4</div>
+      <h2 id="question-text">질문 텍스트가 들어가는 자리입니다.</h2>
+      
+      <div class="options">
+        <button class="btn-option" id="answer-a">선택지 A</button>
+        <button class="btn-option" id="answer-b">선택지 B</button>
+      </div>
+    </section>
+
+    <!-- 3. 결과 화면 -->
+    <section id="result-page" class="page">
+      <div class="badge result-badge">🎉 분석 완료</div>
+      <p class="result-kicker">당신의 BMTI 결과는?</p>
+      <h1 id="result-title">ISFP</h1>
+      <p id="result-desc">결과에 대한 상세 설명이 들어가는 자리입니다.</p>
+      
+      <div class="action-box">
+        <button id="btn-restart" class="btn-main sub">다시 테스트하기</button>
+      </div>
+    </section>
+  </div>
+
+  <script src="./script.js"></script>
+</body>
+</html>
