@@ -4,8 +4,8 @@
   --text: #f0f1f7;
   --muted: #9499b3;
   --border: #1f233a;
-  --accent: #00f0ff; /* 네온 싸이언 */
-  --accent-purple: #bd00ff; /* 네온 퍼플 */
+  --accent: #00f0ff; 
+  --accent-purple: #bd00ff; 
   --accent-hover: #00d8e6;
 }
 
@@ -30,7 +30,7 @@ body {
 .container {
   width: 100%;
   max-width: 420px;
-  height: 640px;
+  height: 650px;
   background-color: var(--panel-bg);
   border: 2px solid var(--border);
   border-radius: 24px;
@@ -90,7 +90,7 @@ p {
 
 .hero-img {
   font-size: 72px;
-  margin: 40px 0;
+  margin: 30px 0;
   animation: float 3s ease-in-out infinite;
 }
 
