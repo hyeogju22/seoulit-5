@@ -1,157 +1,121 @@
-:root {
-  --bg: #0b0e11;
-  --panel-bg: #181a20;
-  --text: #eaecef;
-  --muted: #848e9c;
-  --border: #2b3139;
-  --accent: #fcd535;
-  --accent-hover: #e6c022;
+const questions = [
+  // --- [E vs I] 에너지 방향 (5개) ---
+  { q: "갑자기 보너스가 든든하게 생겼을 때 나의 행동은?", a: "친구들을 즉시 소환해 풀코스로 화끈하게 쏜다", b: "조용히 통장에 넣고 배달앱 최애 메뉴를 켠다", type: "EI" },
+  { q: "사람이 아주 가득 찬 만원 엘리베이터에 탔을 때?", a: "기가 쭉 빨리고 1초라도 빨리 내리고 싶다", b: "별 생각 없거나 마침 아는 사람 있으면 수다 떤다", type: "EI" },
+  { q: "스트레스가 한도 초과인 날, 나만의 해결법은?", a: "밖으로 나가서 지인들을 만나 털어내야 풀린다", b: "방 문 잠그고 침대 속에서 혼자 유튜브를 봐야 풀린다", type: "EI" },
+  { q: "주말에 약속이 없어서 하루 종일 집에만 있었다면?", a: "몸이 근질근질하고 에너지가 처지는 기분이다", b: "완벽하게 충전된 느낌! 너무 행복하고 평화롭다", type: "EI" },
+  { q: "새로운 모임이나 낯선 사람들과의 자리에 갔을 때?", a: "먼저 말을 건네며 분위기를 리드하거나 쉽게 친해진다", b: "구석에서 아는 사람 옆에 붙어 조용히 지켜보는 편이다", type: "EI" },
+
+  // --- [S vs N] 현실 인지 / 상상 (5개) ---
+  { q: "길을 가다 100억이 든 가방을 발견하는 상상을 할 때?", a: "위조지폐 여부, 신고 시 보상금 비율부터 계산한다", b: "건물 매입하고 우주여행 가는 상상으로 뻗어나간다", type: "SN" },
+  { q: "새빨간 사과 하나를 눈앞에서 바라볼 때?", a: "아삭하겠다, 새콤하겠다, 아침 사과는 금사과지", b: "백설공주, 뉴턴의 만유인력, 스티브 잡스가 떠오른다", type: "SN" },
+  { q: "재난 영화나 좀비 영화를 다 보고 난 후 나는?", a: "와 CG 대박이네, 주인공 분장 엄청 리얼하다", b: "우리 집 대문은 좀비 막을 수 있나 탈출로 짜본다", type: "SN" },
+  { q: "아무 생각 없이 멍 때릴 때 내 머릿속 상태는?", a: "진짜 말 그대로 눈앞의 풍경만 보거나 그냥 '무(無)'의 상태", b: "과거 기억의 이불킥부터 인류 미래 상상까지 꼬리를 문다", type: "SN" },
+  { q: "노래를 들을 때 내가 더 중요하게 여기는 요소는?", a: "귀에 꽂히는 멜로디와 리듬, 찰진 비트와 목소리 톤", b: "노래 가사가 은유적으로 담고 있는 메시지와 스토리", type: "SN" },
+
+  // --- [T vs F] 판단의 기준 (5개) ---
+  { q: "친구가 우울해서 충동구매를 했다고 고백할 때?", a: "무슨 물건 샀는데? 할인이나 혜택은 잘 챙김?", b: "요즘 무슨 일 있어? 마음이 많이 힘들었구나ㅠㅠ", type: "TF" },
+  { q: "지인이 중요한 시험에 떨어졌다고 엉엉 울 때?", a: "위로 후에 '다음 시험 타겟은 몇 월이야?' 물어본다", b: "같이 마음 아파하며 '그동안 고생 진짜 많았어' 한다", type: "TF" },
+  { q: "나 너무 화나서 노트북 던졌는데 고장 났어.", a: "기종이 뭔데? 수리비 장난 아니게 나오겠다", b: "헐 얼마나 빡쳤으면 던졌냐.. 손은 안 다쳤어?", type: "TF" },
+  { q: "내가 생각하는 진정한 피드백과 조언의 정의는?", a: "상대의 발전을 위해 문제점을 정확히 짚고 대안을 주는 것", b: "기 죽지 않도록 감정을 먼저 케어하고 공감해 주는 것", type: "TF" },
+  { q: "프로젝트 결과물이 예상보다 안 좋게 나왔을 때?", a: "과정이 어쨌든 결과가 안 좋으니 실패 원인 분석이 시급하다", b: "비록 결과는 아쉽지만 밤샘 노력한 과정 자체가 소중하다", type: "TF" },
+
+  // --- [J vs P] 생활 양식 (5개) ---
+  { q: "오랜만의 장거리 여행, 계획을 짤 때 내 스타일은?", a: "타임라인별 동선, 플랜B 맛집까지 완벽 정리", b: "항공권이랑 숙소만 하고 나머지는 현지 기분 필대로", type: "JP" },
+  { q: "일주일 뒤가 마감인 대형 과제가 떨어졌을 때?", a: "매일 할 분량을 칼같이 나눠 계획적으로 끝낸다", b: "마감 전날 직전의 벼락치기 아드레날린으로 조진다", type: "JP" },
+  { q: "주말 약속이 당일 아침에 취소되었다면?", a: "이미 계획해 둔 오늘 하루 루틴이 깨져서 은근 킹받는다", b: "오히려 좋아! 침대와 한 몸이 될 정당한 명분 획득", type: "JP" },
+  { q: "내 방 책상이나 스마트폰 바탕화면 앱 정리 상태는?", a: "나름의 규칙과 폴더 카테고리별로 깔끔하게 정돈되어 있다", b: "어디에 뭐가 있는지 대충 내가 아는 직관적인 어지러움이다", type: "JP" },
+  { q: "친구가 맛집이라며 당장 1시간 뒤에 만나자고 번개를 친다면?", a: "갑작스러운 제안에 당황스럽고, 가려면 마음의 준비가 필요하다", b: "마침 심심했는데 잘 됐다며 바로 준비하고 나간다", type: "JP" }
+];
+
+const results = {
+  "ESTJ": { title: "효율 만렙 규칙 리더", desc: "체계적이고 확실한 것을 좋아하는 현실의 지배자! 흐트러짐 없는 계획과 칼 같은 실행력으로 무리를 하드캐리하는 대장 스타일입니다." },
+  "ESTP": { title: "에너지 폭발 승부사", desc: "말보다 행동이 5배 빠른 트렌드세터! 매 순간 스릴과 자유를 즐기며 어떠한 위기 상황도 피지컬과 센스로 돌파합니다." },
+  "ESFJ": { title: "친절 보스 인간 마당발", desc: "주변 사람들의 감정을 섬세하게 케어하는 따뜻한 분위기 메이커! 리액션이 좋고 조화로운 커뮤니티를 만드는 데 탁월합니다." },
+  "ESFP": { title: "자유로운 축제 연예인", desc: "인생을 단 한 번뿐인 파티처럼 즐기는 해피바이러스! 호기심이 많고 특유의 친화력으로 누구와도 금방 절친이 됩니다." },
+  "ENTJ": { title: "강철 멘탈 야망 전략가", desc: "철저한 논리와 거대한 비전으로 세상을 설계하는 야심가! 비효율을 혐오하며 목표가 정해지면 뒤를 보지 않고 진격합니다." },
+  "ENTP": { title: "천재 직진러 아이디어 뱅크", desc: "고정관념을 깨부술 때 가장 짜릿함을 느끼는 브레인! 번뜩이는 말솜씨와 재치로 늘 새로운 패러다임을 제안합니다." },
+  "ENFJ": { title: "빛과 소금 헌신적 멘토", desc: "타인의 성장을 진심으로 응원하고 이끄는 따뜻한 리더! 공감대 형성이 아주 뛰어나며 정의로운 에너지가 가득합니다." },
+  "ENFP": { title: "에너지 뿜뿜 낭만 쿼카", desc: "상상력이 풍부하고 늘 열정이 가득한 자유로운 영혼! 겉은 밝아 보여도 내면에는 자신만의 철학과 깊은 생각이 있습니다." },
+  "ISTJ": { title: "철벽 보안 논리 정석", desc: "한 번 맡은 임무는 지구 끝까지 책임지는 듬직한 현실주의자! 기억력이 날카롭고 매사 흐트러짐 없는 규칙을 선호합니다." },
+  "ISTP": { title: "시크한 효율 극대화 전문가", desc: "평소엔 조용하지만 필요할 때 엄청난 집중력을 발휘하는 마이웨이! 쓸데없는 감정 소모를 패스하고 팩트에만 집중합니다." },
+  "ISFJ": { title: "뒤편의 헌신 수호천사", desc: "내가 좋아하는 소중한 사람들을 뒤에서 묵묵히 보살피는 수호자! 섬세하고 꼼꼼하며 책임감이 누구보다 강합니다." },
+  "ISFP": { title: "감성 가득 눕방 아티스트", desc: "갈등을 제일 싫어하고 유유자적함을 사랑하는 평화주의자! 친해지면 속 깊은 따뜻함을 보여주며 침대 위가 가장 행복합니다." },
+  "INTJ": { title: "용의주도한 전략 분석가", desc: "독립적이고 논리적이며 지적 호기심이 최고 수준인 전략가! 혼자 사색하며 거대한 시스템의 본질을 꿰뚫어 보길 좋아합니다." },
+  "INTP": { title: "고독한 뇌섹 사색가", desc: "비판적인 분석력과 나만의 논리 세계가 뚜렷한 조용한 천재! 관심 있는 코드나 이론이 생기면 밤을 새워서라도 정복합니다." },
+  "INFJ": { title: "비밀스러운 예언자 소울", desc: "깊은 통찰력과 강한 신념을 가슴에 품고 사는 신비로운 유형! 겉은 부드러워 보이지만 내면의 기준과 통찰은 누구보다 날카롭습니다." },
+  "INFP": { title: "새벽 감성 낭만 몽상가", desc: "풍부한 이상과 따뜻한 마음을 간직한 우주형 집순이/집돌이! 나만의 가치관을 무엇보다 소중히 여기며 깊은 울림을 줍니다." }
+};
+
+let currentIdx = 0;
+let scores = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
+
+const startPage = document.getElementById('start-page');
+const questionPage = document.getElementById('question-page');
+const resultPage = document.getElementById('result-page');
+const btnStart = document.getElementById('btn-start');
+const btnRestart = document.getElementById('btn-restart');
+const qText = document.getElementById('question-text');
+const btnA = document.getElementById('answer-a');
+const btnB = document.getElementById('answer-b');
+const qCount = document.getElementById('question-count');
+const progressBar = document.getElementById('progress');
+const resultTitle = document.getElementById('result-title');
+const resultDesc = document.getElementById('result-desc');
+
+function showPage(page) {
+  [startPage, questionPage, resultPage].forEach(p => p.style.display = 'none');
+  page.style.display = 'flex';
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+function updateQuestion() {
+  if (currentIdx >= questions.length) {
+    showResult();
+    return;
+  }
+  const currentQ = questions[currentIdx];
+  qText.textContent = currentQ.q;
+  btnA.textContent = currentQ.a;
+  btnB.textContent = currentQ.b;
+  qCount.textContent = `${currentIdx + 1} / ${questions.length}`;
+  progressBar.style.width = `${(currentIdx / questions.length) * 100}%`;
 }
 
-body {
-  background-color: var(--bg);
-  color: var(--text);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
+function showResult() {
+  progressBar.style.width = "100%";
+  
+  const ei = scores.E >= scores.I ? "E" : "I";
+  const sn = scores.S >= scores.N ? "S" : "N";
+  const tf = scores.T >= scores.F ? "T" : "F";
+  const jp = scores.J >= scores.P ? "J" : "P";
+  
+  const finalCode = ei + sn + tf + jp;
+  const result = results[finalCode];
+  
+  resultTitle.innerHTML = `${finalCode} <br><span style='font-size:16px; font-weight:600; color:var(--muted); display:inline-block; margin-top:8px;'>[${result.title}]</span>`;
+  resultDesc.textContent = result.desc;
+  showPage(resultPage);
 }
 
-.container {
-  width: 100%;
-  max-width: 440px;
-  height: 600px;
-  background-color: var(--panel-bg);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 30px 24px;
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
-  position: relative;
-  display: flex;
-  flex-direction: column;
-}
+btnStart.addEventListener('click', () => {
+  currentIdx = 0;
+  scores = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
+  showPage(questionPage);
+  updateQuestion();
+});
 
-.page {
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
-}
+btnA.addEventListener('click', () => {
+  scores[questions[currentIdx].type[0]]++;
+  currentIdx++;
+  updateQuestion();
+});
 
-.page.active {
-  display: flex;
-}
+btnB.addEventListener('click', () => {
+  scores[questions[currentIdx].type[1]]++;
+  currentIdx++;
+  updateQuestion();
+});
 
-.badge {
-  background: rgba(252, 213, 53, 0.1);
-  color: var(--accent);
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 13px;
-  font-weight: bold;
-  margin-bottom: 16px;
-}
-
-h1 {
-  font-size: 32px;
-  font-weight: 800;
-  margin-bottom: 8px;
-  text-align: center;
-}
-h1 b { color: var(--accent); }
-
-p {
-  color: var(--muted);
-  font-size: 14px;
-  text-align: center;
-  line-height: 1.5;
-}
-
-.hero-img {
-  font-size: 64px;
-  margin: 30px 0;
-}
-
-.btn-main {
-  width: 100%;
-  background-color: var(--accent);
-  color: #000;
-  border: none;
-  padding: 16px;
-  border-radius: 12px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  margin-top: auto;
-}
-.btn-main:hover { background-color: var(--accent-hover); }
-.btn-main.sub {
-  background-color: var(--border);
-  color: var(--text);
-}
-
-.progress-container {
-  width: 100%;
-  height: 6px;
-  background-color: var(--border);
-  border-radius: 3px;
-  margin-bottom: 12px;
-}
-.progress-bar {
-  width: 0%;
-  height: 100%;
-  background-color: var(--accent);
-  border-radius: 3px;
-  transition: width 0.2s ease;
-}
-.count {
-  font-size: 13px;
-  color: var(--accent);
-  font-weight: bold;
-  margin-bottom: 20px;
-}
-
-#question-text {
-  font-size: 20px;
-  font-weight: 700;
-  text-align: center;
-  line-height: 1.4;
-  margin-bottom: 30px;
-}
-
-.options {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-top: auto;
-}
-
-.btn-option {
-  width: 100%;
-  background-color: var(--bg);
-  color: var(--text);
-  border: 1px solid var(--border);
-  padding: 16px;
-  border-radius: 12px;
-  font-size: 14px;
-  text-align: left;
-  cursor: pointer;
-}
-.btn-option:hover {
-  border-color: var(--accent);
-}
-
-.result-badge { background: rgba(14, 203, 129, 0.1); color: #0ecb81; }
-#result-title { font-size: 28px; color: var(--accent); margin-bottom: 16px; }
-#result-desc { font-size: 15px; background: rgba(255,255,255,0.02); padding: 16px; border-radius: 12px; border: 1px solid var(--border); }
-.action-box { width: 100%; margin-top: auto; }
+btnRestart.addEventListener('click', () => {
+  showPage(startPage);
+});
