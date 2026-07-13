@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BMTI — 나만의 특별한 성향 테스트</title>
+  <title>BMTI — 초정밀 20문항 성향 테스트</title>
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
@@ -11,11 +11,11 @@
   <div class="container">
     <!-- 1. 시작 화면 -->
     <section id="start-page" class="page active">
-      <div class="badge">🔥 2026 트렌드 테스트</div>
-      <h1>My <b>BMTI</b> Test</h1>
-      <p>진짜 내 모습을 알아보는 초정밀 성향 분석</p>
-      <div class="hero-img">🧠</div>
-      <button id="btn-start" class="btn-main">테스트 시작하기</button>
+      <div class="badge">🛸 CYBER NEON BMTI v2.5</div>
+      <h1>My Real <b>BMTI</b></h1>
+      <p>지표별 5문항, 총 20개의 정밀 쿼리로<br>숨겨진 당신의 진짜 소울 유형을 추적합니다.</p>
+      <div class="hero-img">✨</div>
+      <button id="btn-start" class="btn-main">엔터 코어 시작하기</button>
     </section>
 
     <!-- 2. 질문 화면 -->
@@ -23,8 +23,9 @@
       <div class="progress-container">
         <div class="progress-bar" id="progress"></div>
       </div>
-      <div class="count" id="question-count">1 / 12</div>
-      <h2 id="question-text">질문 텍스트가 들어가는 자리입니다.</h2>
+      <!-- 실시간 카운트는 스크립트가 주입하므로 구조만 유지합니다 -->
+      <div class="count" id="question-count">1 / 20</div>
+      <h2 id="question-text">데이터 로드 중...</h2>
       
       <div class="options">
         <button class="btn-option" id="answer-a">선택지 A</button>
@@ -34,13 +35,13 @@
 
     <!-- 3. 결과 화면 -->
     <section id="result-page" class="page">
-      <div class="badge result-badge">🎉 분석 완료</div>
-      <p class="result-kicker">당신의 BMTI 결과는?</p>
-      <h1 id="result-title">EST-</h1>
-      <p id="result-desc">결과에 대한 상세 설명이 들어가는 자리입니다.</p>
+      <div class="badge result-badge">🔮 분석 완료</div>
+      <p class="result-kicker">당신의 영혼 코드</p>
+      <h1 id="result-title">로딩 중...</h1>
+      <p id="result-desc">결과 분석 데이터를 불러오는 중입니다.</p>
       
       <div class="action-box">
-        <button id="btn-restart" class="btn-main sub">다시 테스트하기</button>
+        <button id="btn-restart" class="btn-main sub">시스템 리부트 (다시하기)</button>
       </div>
     </section>
   </div>
